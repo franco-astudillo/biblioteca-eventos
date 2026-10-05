@@ -22,7 +22,10 @@ export class MensajeriaService implements OnModuleInit, OnModuleDestroy {
     this.canal.on('error', (e: Error) => this.log.error(`canal: ${e.message}`));
 
     await declararTopologia(this.canal);
-    this.log.log(`topologia declarada en ${this.url}`);
+    const destino = new URL(this.url);
+    this.log.log(
+      `topologia declarada en ${destino.protocol}//${destino.hostname}:${destino.port || '5672'}`,
+    );
   }
 
   async onModuleDestroy(): Promise<void> {
